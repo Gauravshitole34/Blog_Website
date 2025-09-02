@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Website</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Header -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-gradient-custom shadow-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold text-dark" href="#">
+                <i class="bi bi-markdown me-2"></i>
+                GS_Blog
+            </a>
+            
+            <div class="d-flex align-items-center gap-2">
+                <!-- Theme Toggle -->
+                <button id="themeToggle" class="btn btn-outline-dark btn-sm" title="Toggle theme">
+                    <i class="bi bi-palette"></i>
+                </button>
+                
+                <!-- Posts List Toggle -->
+                <button id="postsToggle" class="btn btn-outline-dark btn-sm" data-bs-toggle="offcanvas" data-bs-target="#postsOffcanvas" title="View posts">
+                    <i class="bi bi-list-ul"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container-fluid py-3">
+        <div class="row g-3">
+            <!-- Editor Column -->
+            <div class="col-lg-6">
+                <div class="card shadow-sm h-100">
+                    <div class="card-header bg-gradient-custom">
+                        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-2">
+                            <h5 class="mb-0 text-dark">
+                                <i class="bi bi-pencil-square me-2"></i>
+                                Markdown Editor
+                            </h5>
+                            
+                            <!-- Action Buttons -->
+                            <div class="btn-group btn-group-sm" role="group">
+                                <button id="saveDraft" class="btn btn-outline-primary" title="Save as Draft">
+                                    <i class="bi bi-save"></i> Save Draft
+                                </button>
+                                <button id="publishPost" class="btn btn-primary" title="Publish Post">
+                                    <i class="bi bi-send"></i> Publish
+                                </button>
+                                <button id="clearEditor" class="btn btn-outline-danger" title="Clear Editor">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                                
+                                <!-- Export/Import Dropdown -->
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" title="More options">
+                                        <i class="bi bi-three-dots"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><button id="exportMd" class="dropdown-item"><i class="bi bi-download me-2"></i>Export .md</button></li>
+                                        <li><label for="importMd" class="dropdown-item cursor-pointer"><i class="bi bi-upload me-2"></i>Import .md</label></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Formatting Toolbar -->
+                        <div class="border-top pt-2">
+                            <div class="btn-toolbar" role="toolbar">
+                                <div class="btn-group btn-group-sm me-2" role="group">
+                                    <button type="button" class="btn btn-outline-dark toolbar-btn" data-markdown="**text**" title="Bold (Ctrl+B)">
+                                        <i class="bi bi-type-bold"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-outline-dark toolbar-btn" data-markdown="*text*" title="Italic (Ctrl+I)">
+                                        <i class="bi bi-type-italic"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-outline-dark toolbar-btn" data-markdown="`code`" title="Inline Code">
+                                        <i class="bi bi-code"></i>
+                                    </button>
+                                </div>
+                                
+                                <div class="btn-group btn-group-sm me-2" role="group">
+                                    <button type="button" class="btn btn-outline-dark toolbar-btn" data-markdown="# " title="Heading 1">H1</button>
+                                    <button type="button" class="btn btn-outline-dark toolbar-btn" data-markdown="## " title="Heading 2">H2</button>
+                                </div>
+                                
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <button type="button" class="btn btn-outline-dark toolbar-btn" data-markdown="- " title="List Item">
+                                        <i class="bi bi-list-ul"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-outline-dark toolbar-btn" data-markdown="[text](url)" title="Link">
+                                        <i class="bi bi-link-45deg"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-body p-0">
+                        <!-- Post Metadata -->
+                        <div class="p-3 border-bottom bg-light">
+                            <div class="row g-2">
+                                <div class="col-md-8">
+                                    <input type="text" id="postTitle" class="form-control form-control-sm" placeholder="Enter post title..." value="">
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="text" id="postTags" class="form-control form-control-sm" placeholder="Tags (comma separated)" value="">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Markdown Textarea -->
+                        <textarea id="markdownEditor" class="form-control border-0 rounded-0" rows="20" placeholder="# Start writing your markdown here...
+
+## Example Content
+
+This is a **bold** text and this is *italic*.
+
+### Code Example
+```javascript
+console.log('Hello, Markdown!');
+```
+
+- List item 1
+- List item 2
+
+[Example Link](https://example.com)
+
+> This is a blockquote"></textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Preview Column -->
+            <div class="col-lg-6">
+                <div class="card shadow-sm h-100">
+                    <div class="card-header bg-gradient-custom">
+                        <h5 class="mb-0 text-dark">
+                            <i class="bi bi-eye me-2"></i>
+                            Live Preview
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="markdownPreview" class="markdown-preview">
+                            <div class="text-muted text-center py-5">
+                                <i class="bi bi-eye-slash fs-1"></i>
+                                <p class="mt-2">Start typing to see the preview...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Posts Management Offcanvas -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="postsOffcanvas" aria-labelledby="postsOffcanvasLabel">
+        <div class="offcanvas-header bg-gradient-custom">
+            <h5 class="offcanvas-title text-dark" id="postsOffcanvasLabel">
+                <i class="bi bi-collection me-2"></i>
+                Saved Posts
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <!-- Search and Filter Controls -->
+            <div class="mb-3">
+                <div class="input-group input-group-sm">
+                    <input type="text" id="searchPosts" class="form-control" placeholder="Search posts..." aria-label="Search posts">
+                    <button class="btn btn-outline-secondary" type="button" id="clearSearch" title="Clear search">
+                        <i class="bi bi-x"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="mb-3">
+                <select id="filterTags" class="form-select form-select-sm" aria-label="Filter by tags">
+                    <option value="">All tags</option>
+                </select>
+            </div>
+            
+            <!-- Posts List Container -->
+            <div id="postsList" class="posts-list">
+                <!-- Posts will be dynamically loaded here -->
+            </div>
+            
+            <!-- No Posts Message -->
+            <div id="noPostsMessage" class="text-center text-muted py-4 d-none">
+                <i class="bi bi-journal-x fs-1"></i>
+                <p class="mt-2">No posts found</p>
+                <small>Start writing your first post!</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden file input for markdown import -->
+    <input type="file" id="importMd" accept=".md,.txt" style="display: none;" aria-hidden="true">
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Marked.js for Markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    
+    <!-- DOMPurify for HTML sanitization -->
+    <script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="app.js"></script>
+</body>
+</html>
